@@ -1,3 +1,8 @@
+#FORK INFO
+
+Added an option 'omitSourceOrigin' - by default the plugin looks for a sourcemap
+relative to the original js path, this setting omits that step
+
 This is a simple module for applying source maps to JS stack traces in the browser. 
 
 ## The problem this solves

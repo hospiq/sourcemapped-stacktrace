@@ -141,6 +141,7 @@ function(source_map_consumer) {
     this.sem = new Semaphore();
     this.sync = opts && opts.sync;
     this.mapForUri = opts && opts.cacheGlobally ? global_mapForUri : {};
+    this.omitSourceOrigin = opts && opts.omitSourceOrigin ? opts.omitSourceOrigin : false;
   };
 
   Fetcher.prototype.ajax = function(uri, callback) {
@@ -185,7 +186,7 @@ function(source_map_consumer) {
           this.mapForUri[uri] = new source_map_consumer.SourceMapConsumer(atob(embeddedSourceMap[2]));
           this.sem.decr();
         } else {
-          if (!absUrlRegex.test(mapUri)) {
+          if (!absUrlRegex.test(mapUri) && !this.omitSourceOrigin) {
             // relative url; according to sourcemaps spec is 'source origin'
             var origin;
             var lastSlash = uri.lastIndexOf('/');
